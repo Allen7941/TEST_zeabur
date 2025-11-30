@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍄 Mario 抽獎機 🍄</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- 背景裝飾 -->
+        <div class="clouds">
+            <div class="cloud cloud-1">☁️</div>
+            <div class="cloud cloud-2">☁️</div>
+            <div class="cloud cloud-3">☁️</div>
+        </div>
+
+        <!-- 標題 -->
+        <header class="game-header">
+            <h1 class="title">
+                <span class="mario-text">MARIO</span>
+                <span class="lottery-text">抽獎機</span>
+            </h1>
+            <div class="coin-counter">
+                <span class="coin-icon">🪙</span>
+                <span id="coin-count">0</span>
+            </div>
+        </header>
+
+        <!-- 問號方塊抽獎區 -->
+        <main class="lottery-area">
+            <div class="question-block-container">
+                <div class="question-block" id="questionBlock">
+                    <span class="question-mark">?</span>
+                </div>
+                <div class="block-shadow"></div>
+            </div>
+
+            <!-- 獎品顯示區 -->
+            <div class="prize-display" id="prizeDisplay">
+                <div class="prize-popup" id="prizePopup">
+                    <span class="prize-emoji" id="prizeEmoji">🍄</span>
+                    <span class="prize-name" id="prizeName">按下方塊抽獎！</span>
+                    <span class="prize-rarity" id="prizeRarity"></span>
+                </div>
+            </div>
+
+            <!-- 抽獎按鈕 -->
+            <button class="draw-button" id="drawButton">
+                <span class="button-text">🎮 開始抽獎！</span>
+            </button>
+        </main>
+
+        <!-- 抽獎紀錄 -->
+        <section class="history-section">
+            <h2 class="history-title">📜 抽獎紀錄</h2>
+            <div class="history-list" id="historyList">
+                <p class="empty-history">還沒有抽獎紀錄喔！</p>
+            </div>
+        </section>
+
+        <!-- 地面裝飾 -->
+        <div class="ground">
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+            <div class="ground-block"></div>
+        </div>
+
+        <!-- 管子裝飾 -->
+        <div class="pipe pipe-left">
+            <div class="pipe-top"></div>
+            <div class="pipe-body"></div>
+        </div>
+        <div class="pipe pipe-right">
+            <div class="pipe-top"></div>
+            <div class="pipe-body"></div>
+        </div>
+    </div>
+
+    <!-- 音效（可選） -->
+    <audio id="coinSound" preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/coin-drop-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
