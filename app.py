@@ -1,5 +1,6 @@
 ﻿import os
 import random
+from typing import Any, cast
 
 import psycopg2
 from flask import Flask, jsonify, render_template, request
@@ -8,7 +9,9 @@ from psycopg2.extras import RealDictCursor
 app = Flask(__name__)
 
 # PostgreSQL 連線設定 - 使用 Zeabur 環境變數
-DATABASE_URL = os.environ.get("POSTGRES_URI") or os.environ.get("POSTGRES_CONNECTION_STRING")
+DATABASE_URL = os.environ.get("POSTGRES_URI") or os.environ.get(
+    "POSTGRES_CONNECTION_STRING"
+)
 
 
 def get_db_connection():
@@ -39,7 +42,7 @@ def init_db():
 try:
     init_db()
     print("資料庫初始化成功")
-except Exception as e:
+except psycopg2.Error as e:
     print(f"資料庫初始化失敗: {e}")
 
 # 預設獎品列表
@@ -94,7 +97,7 @@ def draw_prize():
         conn.commit()
         cur.close()
         conn.close()
-    except Exception as e:
+    except psycopg2.Error as e:
         print(f"儲存抽獎結果失敗: {e}")
 
     return jsonify({"success": True, "prize": winner})
@@ -125,20 +128,21 @@ def get_history():
         # 轉換結果為可序列化的格式
         history = []
         for row in results:
+            record = cast(dict[str, Any], row)
             history.append(
                 {
-                    "id": row["id"],
-                    "name": row["prize_name"],
-                    "emoji": row["prize_emoji"],
-                    "rarity": row["prize_rarity"],
-                    "created_at": row["created_at"].isoformat()
-                    if row["created_at"]
+                    "id": record["id"],
+                    "name": record["prize_name"],
+                    "emoji": record["prize_emoji"],
+                    "rarity": record["prize_rarity"],
+                    "created_at": record["created_at"].isoformat()
+                    if record["created_at"]
                     else None,
                 }
             )
 
         return jsonify({"success": True, "history": history})
-    except Exception as e:
+    except psycopg2.Error as e:
         print(f"取得歷史紀錄失敗: {e}")
         return jsonify({"success": False, "error": str(e)}), 500
 
@@ -158,7 +162,7 @@ def history_page():
         cur.close()
         conn.close()
         return render_template("history.html", records=results)
-    except Exception as e:
+    except psycopg2.Error as e:
         print(f"取得歷史紀錄失敗: {e}")
         return render_template("history.html", records=[], error=str(e))
 
