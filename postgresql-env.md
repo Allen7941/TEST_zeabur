@@ -1,0 +1,17 @@
+﻿I've deployed a postgresql service on Zeabur. Here are the auto generated env variable: 
+
+POSTGRES_CONNECTION_STRING
+
+POSTGRES_DATABASE
+
+POSTGRES_HOST
+
+POSTGRES_PASSWORD
+
+POSTGRES_PORT
+
+POSTGRES_URI
+
+POSTGRES_USERNAME
+
+POSTGRESQL_HOST
